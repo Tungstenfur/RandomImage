@@ -23,10 +23,16 @@
         <th>Example</th>
     </tr>
     <tr>
-        <td>/api/random/old</td>
+        <td>/api/random/old <span style="color: red">DISABLED</span></td>
         <td>Fills every pixel with random data (not recommended to use)</td>
         <td>Slow</td>
         <td><a href="/randomImage">Click</a></td>
+    </tr>
+    <tr>
+        <td>/api/randomImage?width=[WIDTH]&height=[HEIGHT]</td>
+        <td>Generates a random image with the specified width and height<br/>Default value is 500x500</td>
+        <td>Fast</td>
+        <td><a href="/randomImage2">Click</a> <a href="http://localhost:5100/api/randomImage?width=250&height=250">Api call</a></td>
     </tr>
 </table>
 
