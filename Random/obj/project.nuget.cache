@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "eo9oVJmoruQ=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ZSElektryk\\RiderProjects\\Random\\Random\\Random.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ZSElektryk\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "C:\\Users\\ZSElektryk\\.nuget\\packages\\system.drawing.common\\6.0.0\\system.drawing.common.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

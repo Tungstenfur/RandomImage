@@ -1,0 +1,33 @@
+﻿@page "/randomImage"
+@using System.Runtime.InteropServices
+@rendermode InteractiveServer
+@using System.Drawing
+@using System
+@using System.IO
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Random Image Generator</h1>
+<img src="data:image/png;base64,@imageBase64" />
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+@code {
+    private Bitmap image = new Bitmap(500, 500);
+    private Random random = new Random();
+    private string imageBase64;
+
+    private void IncrementCount()
+    {
+        for (int x = 0; x < 500; x++)
+        {
+            for(int y = 0; y < 500; y++)
+            {
+                image.SetPixel(x, y, Color.FromArgb(random.Next(256), random.Next(256), random.Next(256)));
+            }
+        }
+        using (var ms = new MemoryStream())
+        {
+            image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            imageBase64 = Convert.ToBase64String(ms.ToArray());
+        }
+    }
+}
