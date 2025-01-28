@@ -1,0 +1,35 @@
+﻿@page "/api"
+@attribute [StreamRendering]
+
+<PageTitle>Api documentation</PageTitle>
+<style>
+    table,th,td{
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    th,td{
+        padding: 5px;
+    }
+</style>
+<h1>Api</h1>
+<h3>End points</h3>
+
+<h3>Types</h3>
+<table>
+    <tr>
+        <th>Endpoint</th>
+        <th>Description</th>
+        <th>Speed</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>/api/random/old</td>
+        <td>Fills every pixel with random data (not recommended to use)</td>
+        <td>Slow</td>
+        <td><a href="/randomImage">Click</a></td>
+    </tr>
+</table>
+
+@code {
+    
+}
