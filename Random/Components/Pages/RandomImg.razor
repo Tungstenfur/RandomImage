@@ -10,7 +10,7 @@
 
 <h1>Random Image Generator</h1>
 <img src="data:image/png;base64,@imageBase64" />
-<button class="btn btn-primary" @onclick="IncrementCount">@buttonText</button>
+<button class="btn btn-primary" @onclick="IncrementCount" disabled="@(isEnabled == false)">@buttonText</button>
 @code {
     private Bitmap image = new Bitmap(500, 500);
     private Random random = new Random();
@@ -18,35 +18,41 @@
     private Rectangle rect = new Rectangle(0,0,500,500);
     bool isEnabled = true;
     string buttonText = "Click me";
-    private void IncrementCount()
+
+    private async Task IncrementCount()
     {
         if (isEnabled)
         {
             isEnabled = false;
             buttonText = "Generating...";
-            StateHasChanged();
-            BitmapData data = image.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-            IntPtr ptr = data.Scan0;
-            int bytes = Math.Abs(data.Stride) * image.Height;
-            byte[] rgbValues = new byte[bytes];
-            for (int i = 0; i < bytes; i += 4)
-            {
-                rgbValues[i] = (byte)random.Next(0, 255);
-                rgbValues[i + 1] = (byte)random.Next(0, 255);
-                rgbValues[i + 2] = (byte)random.Next(0, 255);
-                rgbValues[i + 3] = 255;
-            }
+            StateHasChanged(); // Notify the framework to re-render the UI
 
-            Marshal.Copy(rgbValues, 0, ptr, bytes);
-            image.UnlockBits(data);
-            using (var ms = new MemoryStream())
+            await Task.Run(() =>
             {
-                image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                imageBase64 = Convert.ToBase64String(ms.ToArray());
-            }
+                BitmapData data = image.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+                IntPtr ptr = data.Scan0;
+                int bytes = Math.Abs(data.Stride) * image.Height;
+                byte[] rgbValues = new byte[bytes];
+                for (int i = 0; i < bytes; i += 4)
+                {
+                    rgbValues[i] = (byte)random.Next(0, 255);
+                    rgbValues[i + 1] = (byte)random.Next(0, 255);
+                    rgbValues[i + 2] = (byte)random.Next(0, 255);
+                    rgbValues[i + 3] = 255;
+                }
+
+                Marshal.Copy(rgbValues, 0, ptr, bytes);
+                image.UnlockBits(data);
+                using (var ms = new MemoryStream())
+                {
+                    image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    imageBase64 = Convert.ToBase64String(ms.ToArray());
+                }
+            });
+
             isEnabled = true;
             buttonText = "Click me";
-            StateHasChanged();
+            StateHasChanged(); // Notify the framework to re-render the UI
         }
     }
 }
